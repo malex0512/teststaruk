@@ -128,6 +128,103 @@ footer{margin-top:32px;text-align:center;padding:0 20px;width:100%;}
 .footer-copy{font-size:11px;color:rgba(100,116,139,0.4);}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.25);border-radius:4px;}
+
+/* ── TIMER BADGE ── */
+.timer-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(139,92,246,0.12);
+  border:1px solid rgba(139,92,246,0.3);
+  border-radius:99px;padding:7px 18px;
+  margin-bottom:12px;
+  font-size:13px;font-weight:600;color:var(--p3);
+  letter-spacing:0.2px;
+}
+.timer-badge-label{font-size:12px;font-weight:600;color:var(--p3);}
+.timer-badge-val{
+  font-family:'Sora',sans-serif;font-size:15px;font-weight:900;
+  color:#fbbf24;
+  text-shadow:0 0 10px rgba(251,191,36,0.5);
+  letter-spacing:1px;
+  min-width:48px;text-align:center;
+}
+
+/* ── MODAL ── */
+#modalOverlay{
+  position:fixed;inset:0;
+  background:rgba(8,6,18,0.88);
+  backdrop-filter:blur(10px);
+  z-index:99999;
+  display:none;
+  align-items:center;justify-content:center;
+  padding:24px;
+  animation:fIn 0.25s ease;
+}
+#modalOverlay.open{display:flex;}
+@keyframes mFadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.modal-box{
+  width:100%;max-width:380px;
+  background:linear-gradient(160deg,#0f0b1f,#160f2e);
+  border:1px solid rgba(139,92,246,0.3);
+  border-radius:24px;
+  padding:32px 24px 28px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 0 60px rgba(139,92,246,0.2),0 0 20px rgba(251,191,36,0.08),0 20px 60px rgba(0,0,0,0.7);
+  animation:mFadeUp 0.32s cubic-bezier(.4,0,.2,1);
+}
+.modal-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  border-radius:24px 24px 0 0;
+  background:linear-gradient(90deg,#5b21b6,#8b5cf6,#a78bfa,#fbbf24);
+}
+.modal-close-btn{
+  position:absolute;top:14px;right:16px;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:var(--mu);font-size:16px;line-height:28px;text-align:center;
+  cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;
+}
+.modal-close-btn:hover{background:rgba(255,255,255,0.12);color:#fff;}
+.modal-icon{font-size:48px;margin-bottom:14px;animation:unlockBob 2.5s ease-in-out infinite;}
+@keyframes unlockBob{0%,100%{transform:scale(1);filter:drop-shadow(0 0 12px rgba(139,92,246,0.5));}50%{transform:scale(1.08);filter:drop-shadow(0 0 22px rgba(251,191,36,0.6));}}
+.modal-title{
+  font-family:'Sora',sans-serif;font-size:20px;font-weight:900;
+  color:#fff;margin-bottom:8px;letter-spacing:-0.3px;
+}
+.modal-sub{font-size:13.5px;color:var(--mu);line-height:1.6;margin-bottom:22px;}
+.modal-sub strong{color:var(--p3);}
+.modal-steps{
+  background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.15);
+  border-radius:14px;padding:14px 16px;margin-bottom:22px;text-align:left;
+  display:flex;flex-direction:column;gap:10px;
+}
+.modal-step{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mu);}
+.modal-step-num{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--p),var(--g));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:11px;font-weight:800;color:#fff;
+}
+#continueBtn{
+  display:block;width:100%;padding:18px;border-radius:14px;
+  background:linear-gradient(135deg,#5b21b6 0%,#7c3aed 50%,#a855f7 85%,#fbbf24 100%);
+  color:#fff;font-family:'Sora',sans-serif;font-size:16px;font-weight:800;
+  text-align:center;border:none;cursor:pointer;
+  box-shadow:0 0 28px rgba(139,92,246,0.55),0 4px 18px rgba(0,0,0,0.4);
+  animation:ctaP 2.8s ease-in-out infinite;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;overflow:hidden;transition:all 0.22s ease;
+  letter-spacing:0.2px;
+}
+#continueBtn::after{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+  animation:shine 3s linear 1.5s infinite;
+}
+#continueBtn:hover{transform:translateY(-1px) scale(1.01);animation:none;}
+#continueBtn:active{transform:scale(0.98);animation:none;}
+.modal-note{font-size:11.5px;color:var(--mu2);margin-top:10px;}
+
 </style>
 </head>
 <body>
@@ -161,13 +258,17 @@ footer{margin-top:32px;text-align:center;padding:0 20px;width:100%;}
   <!-- ABOVE FOLD -->
   <div class="above-fold">
     <div class="badge">&#11088; Trending App This Week</div>
+    <div class="timer-badge">
+      <span class="timer-badge-label">&#9203; Offer expires in</span>
+      <span class="timer-badge-val" id="timer">20:00</span>
+    </div>
     <div class="headline">
       <span class="hw">Test Apps &amp;</span>
       <span class="hg">Earn Rewards</span>
     </div>
     <p class="hero-sub">Join millions who test apps, give feedback and collect reward points. Redeem for gift cards, PayPal &amp; more.</p>
 
-    <button class="cta-btn" onclick="go()">Claim My Free Reward &rarr;</button>
+    <button class="cta-btn offer-card">Claim My Free Reward &rarr;</button>
     <div class="cta-note">&#128274;&nbsp;Free to join &bull; No credit card &bull; Instant reward points</div>
 
     <div class="social-proof">&#128101; <strong>14,832 people</strong> joined TestStar this week</div>
@@ -205,28 +306,28 @@ footer{margin-top:32px;text-align:center;padding:0 20px;width:100%;}
   <!-- TASKS -->
   <div class="sec-title">Popular tasks right now</div>
   <div class="tasks">
-    <div class="task hot" onclick="go()">
+    <div class="task hot offer-card" onclick="">
       <div class="tl">
         <div class="tname">App Testing&nbsp;<span class="hot-tag">HOT</span></div>
         <div class="tsub">Try a new app &amp; share feedback</div>
       </div>
       <div class="tr"><div class="tstar">&#9733; 5.0</div><div class="tgo">Go &rsaquo;</div></div>
     </div>
-    <div class="task" onclick="go()">
+    <div class="task offer-card" onclick="">
       <div class="tl">
         <div class="tname">Game Testing</div>
         <div class="tsub">Play &amp; complete in-app goals</div>
       </div>
       <div class="tr"><div class="tstar">&#9733; 5.0</div><div class="tgo">Go &rsaquo;</div></div>
     </div>
-    <div class="task" onclick="go()">
+    <div class="task offer-card" onclick="">
       <div class="tl">
         <div class="tname">Quick Surveys</div>
         <div class="tsub">Answer a few questions</div>
       </div>
       <div class="tr"><div class="tstar">&#9733; 4.9</div><div class="tgo">Go &rsaquo;</div></div>
     </div>
-    <div class="task" onclick="go()">
+    <div class="task offer-card" onclick="">
       <div class="tl">
         <div class="tname">100+ more tasks</div>
         <div class="tsub">Unlocked after signup</div>
@@ -255,7 +356,7 @@ footer{margin-top:32px;text-align:center;padding:0 20px;width:100%;}
 
   <!-- BOTTOM CTA -->
   <div style="width:calc(100% - 32px);">
-    <button class="cta-btn" onclick="go()">Claim My Free Reward &rarr;</button>
+    <button class="cta-btn offer-card">Claim My Free Reward &rarr;</button>
     <div class="cta-note">&#128274;&nbsp;Free to join &bull; No credit card &bull; Instant reward points</div>
   </div>
 
@@ -271,7 +372,7 @@ footer{margin-top:32px;text-align:center;padding:0 20px;width:100%;}
 </div>
 
 <script>
-var OFFER="https://taprkr.com/r/eyJ0IjoidGVzdHN0YXIiLCJ0aWQiOiI4YmZhMzAyYzJkOWJkOThmY2NiMSIsInRzIjoxNzg1NzA4NzAwMTAxfQ?feb=1";
+var OFFER="https://taprkr.com/r/eyJ0IjoidGVzdHN0YXIiLCJ0aWQiOiI4YmZhMzAyYzJkOWJkOThmY2NiMSIsInRzIjoxNzg1NzE0NjI1NTQzfQ";
 function go(){document.getElementById('ro').classList.add('show');setTimeout(function(){window.location.href=OFFER;},900);}
 
 var NAMES=["Liam", "Sarah", "Kevin", "Emma", "Marcus", "Chloe", "Ethan", "Sophia", "Jacob", "Mia", "Noah", "Olivia", "James", "Ava", "Lucas", "Isabella"];
@@ -293,6 +394,69 @@ function showToast(){
 setTimeout(showToast,5000);
 </script>
 
-  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4b81f0cbab544d558709ca4a3e747a21"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- MODAL OVERLAY -->
+<div id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-close-btn" id="modalClose">&#215;</div>
+
+    <div class="modal-icon">&#128275;</div>
+    <div class="modal-title">You&rsquo;re almost in!</div>
+    <div class="modal-sub">Your <strong>free reward spot</strong> is reserved. Follow the steps below to activate your welcome bonus.</div>
+
+    <div class="modal-steps">
+      <div class="modal-step">
+        <div class="modal-step-num">1</div>
+        <span>Create your <strong style="color:#fff;">free account</strong> on the next page</span>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">2</div>
+        <span>Enter age <strong style="color:#fbbf24;">25+</strong> to unlock all reward offers</span>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">3</div>
+        <span>Pick a task &amp; start collecting <strong style="color:#fff;">reward points</strong></span>
+      </div>
+    </div>
+
+    <button id="continueBtn">Access My Rewards &rarr;</button>
+    <div class="modal-note">&#128274; Free to join &bull; No credit card &bull; Instant points</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var baseUrl = 'https://taprkr.com/r/eyJ0IjoidGVzdHN0YXIiLCJ0aWQiOiI4YmZhMzAyYzJkOWJkOThmY2NiMSIsInRzIjoxNzg1NzE0NjI1NTQzfQ';
+  var redirectUrl = new URL(baseUrl);
+  var urlParams = new URLSearchParams(window.location.search);
+  var s2Value = urlParams.get('s2');
+  if (s2Value) { redirectUrl.searchParams.set('s1', s2Value); }
+  redirectUrl.searchParams.set('feb', '1');
+  var AFFILIATE_URL = redirectUrl.toString();
+
+  var timerEl = document.getElementById('timer');
+  var seconds = 20 * 60;
+  var modalOverlay = document.getElementById('modalOverlay');
+  var modalClose = document.getElementById('modalClose');
+  var continueBtn = document.getElementById('continueBtn');
+  var offerCards = document.querySelectorAll('.offer-card');
+
+  function renderTimer() {
+    var m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    var s = String(seconds % 60).padStart(2, '0');
+    if (timerEl) timerEl.textContent = m + ':' + s;
+  }
+  renderTimer();
+  setInterval(function() { if (seconds > 0) { seconds--; renderTimer(); } }, 1000);
+
+  function openModal() { modalOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { modalOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+  if (modalClose) { modalClose.addEventListener('click', closeModal); }
+  if (modalOverlay) { modalOverlay.addEventListener('click', function(e) { if (e.target === modalOverlay) closeModal(); }); }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  if (continueBtn) { continueBtn.addEventListener('click', function() { window.location.href = AFFILIATE_URL; }); }
+  offerCards.forEach(function(card) { card.addEventListener('click', openModal); });
+})();
+</script>
 </body>
 </html>
